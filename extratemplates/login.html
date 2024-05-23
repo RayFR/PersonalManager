@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="login-section">
+    <h2 class="login-title">Account Login</h2>
+    <form class="form-container" action="#" method="POST">
+        {% csrf_token %}
+        <input class="input-bar" type="text" id="username" name="username" required placeholder="Enter Account Username">
+
+        <input class="input-bar" type="password" id="password" name="password" required placeholder="Enter Account Password">
+        
+        <button class="submit-button" type="submit">Login</button>
+
+        <p>{{ message }}</p>
+
+        <a class="register-here" href="/register">Don't have an account? Create one.</a>
+
+    </form>
+</section>
+{% endblock content %}

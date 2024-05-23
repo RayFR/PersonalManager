@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="register-section">
+    <h2 class="register-title">Create an Account</h2>
+    <form class="form-container" action="#" method="POST">
+        {% csrf_token %}
+
+        <input class="input-bar" placeholder="Enter Account Email" type="email" id="email" name="email" required>
+
+        <input class="input-bar" placeholder="Enter Account Password" type="password" id="password" name="password" required>
+
+        <input class="input-bar" placeholder="Enter Account Username" type="text" id="username" name="username" required>
+                        
+        <input class="submit-button" type="submit" value="Submit">
+
+        <a class="login-here" href="/login">Already have an account?</a>
+
+    </form>
+</section>
+{% endblock content %}
