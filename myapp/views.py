@@ -24,7 +24,7 @@ def register(request):
         form = RegistrationForm()
     return render(request, "register.html", {'form': form})
 
-def login(request):
+def login_page(request):
     if request.method == 'POST':
         form = LoginForm(data = request.POST)
         print('request method is POST')
@@ -36,7 +36,7 @@ def login(request):
             if user is not None:
                 print('user is true')
                 login(request,user)
-                return redirect('hi')
+                return redirect('home')
     else:
         form = LoginForm()
     return render(request,'login.html',{'form':form})

@@ -6,7 +6,7 @@
     <form class="form-container" action="{% url 'login' %}" method="POST">
 
         {% csrf_token %}
-        <input class="input-bar" placeholder="Enter Account Email" type="email" id="username" name="email" required>
+        <input class="input-bar" placeholder="Enter Account Email" type="email" id="email" name="email" required>
 
         <input class="input-bar" type="password" id="password" name="password" required placeholder="Enter Account Password">
         
@@ -14,7 +14,7 @@
 
         <p>{{ message }}</p>
 
-        <a class="register-here" href="/register">Don't have an account? Create one.</a>
+        <a class="register-here" href="{% url 'register' %}">Don't have an account? Create one.</a>
 
     </form>
 </section>
