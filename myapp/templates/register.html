@@ -3,7 +3,7 @@
 {% block content %}
 <section class="register-section">
     <h2 class="register-title">Create an Account</h2>
-    <form class="form-container" action="#" method="POST">
+    <form class="form-container" action="{% url 'register' %}" method="POST">
         {% csrf_token %}
 
         <input class="input-bar" placeholder="Enter Account Email" type="email" id="email" name="email" required>

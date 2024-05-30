@@ -16,29 +16,27 @@ def register(request):
     if request.method == 'POST':
         form = RegistrationForm(request.POST)
         if form.is_valid():
+            user = form.save(commit=False)
+            user.set_password(form.cleaned_data['password'])
             form.save()
             return redirect('login')
     else:
         form = RegistrationForm()
     return render(request, "register.html", {'form': form})
 
-def login_view(request):
-    form = LoginForm()
-    message = ''
-    logged = 'You are not logged in.'
+def login(request):
     if request.method == 'POST':
-        form = LoginForm(request.POST)
+        form = LoginForm(data = request.POST)
+        print('request method is POST')
         if form.is_valid():
-            username = request.POST['username']
-            password = request.POST['password']
-            # Authenticate using email and password
-            user = authenticate(request, username=username, password=password)
+            print('form is valid')
+            email = form.cleaned_data['email']
+            password = form.cleaned_data['password']
+            user = authenticate(email=email,password=password)
             if user is not None:
-                print("user found")
-                login(request, user)
-                message = f'Hello {user.username}! You have been logged in'
-                logged = f'You are logged in as {user.username}'
-            else:
-                print("user not found")
-                message = 'Not logged in!'
-    return render(request, 'login.html', context={'form': form, 'message': message, 'logged': logged})
+                print('user is true')
+                login(request,user)
+                return redirect('hi')
+    else:
+        form = LoginForm()
+    return render(request,'login.html',{'form':form})

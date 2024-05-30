@@ -1,14 +1,17 @@
 from django import forms
-from .models import CustomUser
+from .models import User
 
 class RegistrationForm(forms.ModelForm):
     class Meta:
-        model = CustomUser
+        model = User
         fields = ['email', 'password', 'username']
         widgets = {
             'password': forms.PasswordInput(),
         }
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
+    email = forms.EmailField()
     password = forms.CharField(max_length=128)
+    class Meta:
+        model = User
+        fields = ['email', 'password']

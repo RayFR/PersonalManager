@@ -3,10 +3,10 @@
 {% block content %}
 <section class="login-section">
     <h2 class="login-title">Account Login</h2>
-    <form class="form-container" action="#" method="POST">
+    <form class="form-container" action="{% url 'login' %}" method="POST">
 
         {% csrf_token %}
-        <input class="input-bar" placeholder="Enter Account Username" type="text" id="username" name="username" required>
+        <input class="input-bar" placeholder="Enter Account Email" type="email" id="username" name="email" required>
 
         <input class="input-bar" type="password" id="password" name="password" required placeholder="Enter Account Password">
         
