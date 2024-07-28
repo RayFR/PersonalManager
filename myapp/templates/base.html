@@ -1,43 +1,41 @@
 {% load static %}
 <html lang="en">
 <head>
+    {% load livereload_tags %}
+    {% livereload_script %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Base{% endblock %}</title>
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Sans+Mono:ital,wght@0,400..700;1,400..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick-theme.css"/>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel/slick/slick.min.js"></script>
 </head>
 <body>
-    <section class="top">
-        <header class="header">
-            <h1>Personal Manager Website</h1>
-            <div class="login-information">
-                {% if user.is_authenticated %}
-                    <p>You are logged in as {{ user.username }}.</p>
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <button type="submit">Log Out</button>
-                    </form>
-                {% else %}
-                    <p>You are not logged in.</p>
-                    <a href="{% url 'login' %}">Login</a>
-                {% endif %}
-            </div>
-        </header>
-
-        
-    
+    {% comment %} <section class="top">
+        <div class="login-information">
+            {% if user.is_authenticated %}
+                <p>You are logged in as {{ user.username }}.</p>
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button class="logout-button" type="submit">Log Out</button>
+                </form>
+            {% else %}
+                <p>You are not logged in.</p>
+                <a href="{% url 'login' %}">Login</a>
+            {% endif %}
+        </div>
         <nav class="navbar">
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="#">Todos</a></li>
-                <li><a href="#">Login</a></li>
-                <li><a href="#">Register</a></li>
-            </ul>
+            <div><a href="{% url 'home' %}" class="img-anchor"><img src="{% static 'images/HOMEICON.png' %}" alt="HOME ICON"><a/><a href="{% url 'home' %}" class="text-anchor">Home</a></div>
+            <div><a href="{% url 'dashboard' %}" class="img-anchor"><img src="{% static 'images/DASHBOARDICON.png' %}" alt="DASHBOARD ICON"><a/><a href="{% url 'dashboard' %}" class="text-anchor">Dashboard</a></div>
+            <div><a href="{% url 'login' %}" class="img-anchor"><img src="{% static 'images/ACCOUNTICON.png' %}" alt="ACCOUNT ICON"><a/><a href="{% url 'login' %}" class="text-anchor">Account</a></div>
         </nav>
-    </section>
+        <img class="logo" src="{% static "images/ORDOLOGO.png" %}">
+    </section> {% endcomment %}
 
     <main>
         {% block content %}

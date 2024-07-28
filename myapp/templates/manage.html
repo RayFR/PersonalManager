@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<div class="menu">
+    <img src="{% static 'images/ORDOLOGO.png' %}" alt="Ordo Logo" class="menu-logo">
+    <div class="menu-options">
+        <div class="dashboard-menu">
+            <img src="{% static 'images/apps.svg' %}" alt="Dashboard">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        </div>
+        <div class="manage">
+            <img src="{% static 'images/layers.svg' %}" alt="Manage">
+            <a href="{% url 'manage' %}">Manage</a>
+        </div>
+        <div class="settings">
+            <img src="{% static 'images/settings.svg' %}" alt="Settings">
+            <a>Settings</a>
+        </div>
+    </div>
+    <div class="login-information">
+        {% if user.is_authenticated %}
+            <p class="login-text">You are logged in as {{ user.username }}.</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="logout-button" type="submit">Log Out</button>
+            </form>
+        {% else %}
+            <p class="login-text">You are not logged in.</p>
+            <a class="login-anchor" href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+</div>
+<div class="manage-section">
+    <div class="task-section">
+        <h2 class="task-header">Add New Task:</h2>
+        <form class="task-form" action="{% url 'manage' %}" method="POST">
+            {% csrf_token %}
+            {{ taskForm.as_p }}
+            <button class="task-button" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="task-section">
+        <h2 class="task-header">Add New Habit:</h2>
+        <form class="task-form" action="{% url 'manage' %}" method="POST">
+            {% csrf_token %}
+            {{ habitForm.as_p }}
+            <button class="task-button" type="submit">Submit</button>
+        </form>
+    </div>
+    <div class="task-section">
+        <h2 class="task-header">Add New Goal:</h2>
+        <form class="task-form" action="{% url 'manage' %}" method="POST">
+            {% csrf_token %}
+            {{ goalForm.as_p }}
+            <button class="task-button" type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+{% endblock content %}

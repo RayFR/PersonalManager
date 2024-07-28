@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="menu">
+    <img src="{% static 'images/ORDOLOGO.png' %}" alt="Ordo Logo" class="menu-logo">
+    <div class="menu-options">
+        <div class="dashboard-menu">
+            <img src="{% static 'images/apps.svg' %}" alt="Dashboard">
+            <a href="{% url 'dashboard' %}">Dashboard</a>
+        </div>
+        <div class="manage">
+            <img src="{% static 'images/layers.svg' %}" alt="Manage">
+            <a href="{% url 'manage' %}">Manage</a>
+        </div>
+        <div class="settings">
+            <img src="{% static 'images/settings.svg' %}" alt="Settings">
+            <a>Settings</a>
+        </div>
+    </div>
+    <div class="login-information">
+        {% if user.is_authenticated %}
+            <p class="login-text">You are logged in as {{ user.username }}.</p>
+            <form action="{% url 'logout' %}" method="post">
+                {% csrf_token %}
+                <button class="logout-button" type="submit">Log Out</button>
+            </form>
+        {% else %}
+            <p class="login-text">You are not logged in.</p>
+            <a class="login-anchor" href="{% url 'login' %}">Login</a>
+        {% endif %}
+    </div>
+</div>
+<div class="dashboard">
+    <div class="task-priority widget">
+        <p class="task-priority-title">Task Priority | 5 Tasks</p>
+        <div class="task-list">
+            {% for task in tasks %}
+            <div class="task">
+                <p class="task-name">{{ task.name }}</p>
+                <p class="task-date">Complete by {{ task.dateDue }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="calendar widget">
+        <p class="month-year">July 2024</p>
+        <div class="calendar-container">
+            <div class="check-circle day">1</div>
+            <div class="check-circle day">2</div>
+            <div class="check-circle day">3</div>
+            <div class="check-circle day">4</div>
+            <div class="check-circle day">5</div>
+            <div class="check-circle day">6</div>
+            <div class="check-circle day">7</div>
+            <div class="check-circle day">8</div>
+            <div class="check-circle day">9</div>
+            <div class="check-circle day">10</div>
+            <div class="check-circle day">11</div>
+            <div class="check-circle day">12</div>
+            <div class="check-circle day">13</div>
+            <div class="check-circle day">14</div>
+            <div class="check-circle day">15</div>
+            <div class="check-circle day">16</div>
+            <div class="check-circle day">17</div>
+            <div class="check-circle day">18</div>
+            <div class="check-circle day">19</div>
+            <div class="check-circle day">20</div>
+            <div class="check-circle day">21</div>
+            <div class="check-circle day">22</div>
+            <div class="check-circle day">23</div>
+            <div class="check-circle day">24</div>
+            <div class="check-circle day">25</div>
+            <div class="check-circle day">26</div>
+            <div class="check-circle day">27</div>
+            <div class="check-circle day">28</div>
+            <div class="check-circle day">29</div>
+            <div class="check-circle day">30</div>
+            <div class="check-circle day">31</div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+            <div class="check-circle day"></div>
+        </div>
+    </div>
+    <div class="closest-goal widget">
+        <p class="closest-goal-title">Closest Goal</p>
+        <div class="closest-goal-wrapper">
+            {% for goal in goals %}
+            <div class="closest-goal-box">
+                <p class="goal-title">{{ goal.name }}</p>
+                <div class="line-100"></div>
+                {% for goalTask in goals.tasks %}
+                <div class="task">
+                    <p class="task-name">{{ goalTask.name }}</p>
+                    <p class="task-date">Complete by {{ goalTask.dateDue }}</p>
+                </div>
+                {% endfor %}
+                <p class="goal-date">Complete by {{ goal.date }}</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    <div class="habit-checklist widget">
+        <p class="habit-checklist-title">Habit Checklist</p>
+        <div class="habit-box">
+            {% for habit in habits %}
+            <div class="habit">
+                {{ habitForm.as_p }}
+                <div class="habit-name">{{ habit.name }}</div>
+            </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

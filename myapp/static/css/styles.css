@@ -1,23 +1,42 @@
+:root {
+    --primary-key: rgb(222, 219, 210);
+    --secondary-key: rgb(74, 87, 89);
+    --primary-colour: #DEDBD2;
+    --secondary-colour: #ACB996;
+    --tertiary-colour: #426353;
+    --accent-colour: #00361C;
+    --text-colour: black;
+    --widget-width: 350px;
+    --widget-height: 350px;
+    --task-height: 70px;
+}
+
 body {
     padding: 0;
     margin: 0;
     overflow-x: hidden;
     overflow-y: hidden;
-    font-family: "Ubuntu Sans Mono", monospace;
-    width: 100vw;
-    height: 85vh;
-}
-
-html {
+    font-family: "Ubuntu", monospace;
     width: 100vw;
     height: 100vh;
+    background-color: var(--primary-key);
+    cursor: default;
 }
 
-.header {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: var(--accent-colour);
+    cursor: default;
+}
+
+
+.top {
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
-    align-items: center;
+    flex-direction: row-reverse;
+    margin-top: 20px;
 }
 
 .header h1 {
@@ -25,34 +44,65 @@ html {
 }
 
 .login-information {
-    margin-right: 5vw;
-    margin-bottom: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-right: 1%;
+}
+
+.login-text {
+    color: var(--accent-colour);
+}
+
+.logout-button {
+    color: var(--accent-colour);
+    background-color: var(--primary-colour);
+    border-color: var(--accent-colour);
+    border-radius: 10px;
+    font-weight: 600;
+    padding: 10px;
+}
+
+.logout-button:hover {
+    cursor: pointer;
+}
+
+.top img {
+    max-width: 80px;
+    max-height: 50px;
+    margin-left: 1%;
 }
 
 .navbar {
-    background-color: #333;
-    color: #fff;
+    color: var(--secondary-key);
     text-align: center;
-    width: 100vw;
+    width: 25vw;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-left: 6%;
 }
 
-.navbar ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
+.navbar div {
+    display: flex;
+    flex-direction: column;
+    width: 70px;
+    justify-content: center;
+    align-items: center;
+    gap: 1px;
 }
 
-.navbar ul li {
-    display: inline;
+.navbar div img {
+    height: 80px;
+    width: 60px;
+    object-fit: contain;
 }
 
-.navbar ul li a {
+.text-anchor {
     text-decoration: none;
-    color: #fff;
+    color: var(--secondary-key);
+    font-weight: 500;
 }
 
 .register-section {
@@ -70,6 +120,7 @@ html {
     font-size: 1rem;
     margin-bottom: 1.5rem;
     position: relative;
+    color: var(--secondary-key);
 }
 
 .form-container {
@@ -82,30 +133,36 @@ html {
 .form-container::after {
     content: "";
     display: block;
-    width: 100%; /* Adjust the width as needed */
-    height: 1px; /* Adjust the height as needed */
-    background-color: black; /* Adjust the color as needed */
+    width: 100%;
+    /* Adjust the width as needed */
+    height: 1px;
+    /* Adjust the height as needed */
+    background-color: black;
+    /* Adjust the color as needed */
     border-style: dashed 1px black;
 }
 
 .input-bar {
     height: 25px;
     border-radius: 10px;
-    border: solid 1px black;
+    border: solid 1px var(--secondary-key);
     text-align: center;
+    background-color: var(--primary-key);
 }
 
 .submit-button {
-    border: solid 1px black;
-    border-radius: 4px;
+    border: solid 1px var(--secondary-key);
+    border-radius: 10px;
     width: 50%;
     align-self: center;
+    background-color: var(--secondary-key);
+    color: var(--primary-key);
 }
 
 .submit-button::after {
     content: "";
     border-bottom: solid 3px black;
-    margin-top: 10px; 
+    margin-top: 10px;
 }
 
 main {
@@ -131,4 +188,438 @@ main {
     font-size: 1rem;
     margin-bottom: 1.5rem;
     position: relative;
+    color: var(--secondary-key);
+}
+
+.register-here,
+.login-here {
+    text-decoration: underline;
+    color: var(--secondary-key);
+    font-weight: 500;
+}
+
+/* DASHBOARD STYLES */
+
+.menu {
+    width: 20vw;
+    height: 100vh;
+    background-color: var(--secondary-colour);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+    transition: background-color 0.3s ease;
+}
+
+.menu:hover {
+    background-color: #a1ad8d;
+}
+
+.menu div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: center;
+}
+
+.menu div a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.menu div a {
+    width: 80px;
+    font-weight: 600;
+    font-size: large;
+    position: relative;
+    /* Ensure relative positioning for pseudo-element */
+    display: inline-block;
+    /* Make sure it respects text wrapping */
+    color: var(--accent-colour);
+    /* Default text color */
+    transition: color 0.5s ease;
+    /* Smooth transition for color change */
+}
+
+.menu div a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    /* Adjust based on desired underline position */
+    width: 100%;
+    height: 2px;
+    /* Thickness of the underline */
+    background-color: var(--accent-colour);
+    /* Underline color */
+    transform: scaleX(0);
+    /* Start with no width */
+    transform-origin: bottom right;
+    /* Expand from bottom right corner */
+    transition: transform 0.5s ease;
+    /* Smooth transition for underline */
+}
+
+.menu div a:hover::after {
+    transform: scaleX(1);
+    /* Expand underline to full width on hover */
+    transform-origin: bottom left;
+    /* Expand from bottom left corner */
+}
+
+.menu-logo {
+    width: 100px;
+    height: 80px;
+}
+
+.menu-options {
+    display: flex;
+    flex-direction: column;
+}
+
+.menu-options img {
+    width: 40px;
+    height: 40px;
+}
+
+.dashboard {
+    width: 80vw;
+    height: 100vh;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    background-color: var(--primary-colour);
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    /* Two rows with equal height */
+    grid-template-columns: 1fr 1fr;
+    /* Two columns with equal width */
+    gap: 30px;
+    /* grid-template-columns: repeat(auto-fill, minmax(var(--widget-width), 1fr));
+    grid-auto-rows: minmax(var(--widget-height), auto); */
+}
+
+.widget {
+    border: solid 1px var(--secondary-colour);
+    border-radius: 20px;
+    width: 100%;
+    height: 100%;
+    background-color: var(--secondary-colour);
+    align-self: center;
+    justify-self: center;
+    overflow: hidden;
+    /* Hide overflow to contain the underline */
+    transition: background-color 0.3s ease;
+    /* Smooth transition for background color */
+}
+
+.widget:hover {
+    background-color: #a1ad8d;
+    /* Change background color on hover */
+}
+
+.task-priority {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-evenly;
+}
+
+.task-priority-title {
+    font-size: x-large;
+    font-weight: 500;
+    color: var(--accent-colour);
+}
+
+.task {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--task-height);
+    width: 80%;
+    height: fit-content;
+    background-color: var(--primary-colour);
+    border: solid 1px var(--tertiary-colour);
+    border-radius: 40px;
+    padding: 20px;
+    transition: background-color 0.3s ease;
+    transition: transform 0.3s ease;
+}
+
+.task:hover {
+    background-color: var(--tertiary-colour);
+    transform: scale(1.05);
+    border-color: var(--primary-colour);
+    color: var(--primary-colour);
+    cursor: pointer;
+}
+
+.task:hover p {
+    color: var(--primary-colour);
+}
+
+.task-name {
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+.task-date {
+    font-size: 0.9rem;
+}
+
+.task-date {}
+
+.task-list {
+    overflow-y: scroll;
+    height: 70%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid var(--accent-colour);
+    border-bottom: 1px dashed var(--accent-colour);
+    border-radius: 5px;
+}
+
+.closest-goal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+}
+
+.closest-goal-title {
+    font-size: x-large;
+    font-weight: 500;
+    color: var(--accent-colour);
+    padding-bottom: 20px;
+}
+
+.closest-goal-wrapper {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    border: solid 2px var(--accent-colour);
+    border-radius: 5px;
+    gap: 50px;
+    overflow-x: auto;
+    padding: 15px;
+}
+
+.closest-goal-box {
+    flex: 1;
+    /* Allow the boxes to grow */
+    min-width: 400px;
+    /* Ensure a minimum width for the boxes */
+    width: 300px;
+    height: 80%;
+    background-color: var(--primary-colour);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.closest-goal-box .task {
+    width: 80%;
+}
+
+.line-100 {
+    border-top: solid 3px var(--secondary-colour);
+    width: 100%;
+}
+
+.habit-checklist {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    justify-content: space-evenly;
+}
+
+.habit-checklist-title {
+    font-size: x-large;
+    font-weight: 500;
+    color: var(--accent-colour);
+}
+
+.habit-box {
+    width: 100%;
+    height: 70%;
+    padding: 20px;
+    border-radius: 5px;
+    border: 2px solid var(--accent-colour);
+    border-bottom: 1px dashed var(--accent-colour);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+    overflow-y: scroll;
+}
+
+.habit {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-right: 20px;
+    padding-left: 20px;
+    border: solid 1px var(--accent-colour);
+    border-radius: 20px;
+}
+
+.habit p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.habit label {
+    visibility: hidden;
+}
+
+#id_completed {
+    border: 1px solid var(--accent-colour);
+    padding: 10px;
+}
+
+.habit-name {
+    width: 200px;
+    text-align: center;
+}
+
+.check-circle {
+    border: solid 3px var(--primary-colour);
+    border-radius: 90px;
+    width: 30px;
+    height: 30px;
+}
+
+.check-circle:hover {
+    cursor: pointer;
+}
+
+.full {
+    background-color: var(--primary-colour);
+}
+
+.calendar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    padding: 20px;
+    gap: 20px
+}
+
+.month-year {
+    font-size: x-large;
+    font-weight: 500;
+    padding-left: 20px;
+}
+
+.calendar-container {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(6, 1fr);
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.day {
+    background-color: var(--primary-colour);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    transition: border-color 0.2s ease;
+
+}
+
+.day:hover {
+    background-color: var(--accent-colour);
+    color: var(--primary-colour);
+    border-color: var(--accent-colour);
+    cursor: pointer;
+}
+
+/* MANAGE STYLES */
+
+.manage-section {
+    width: 80vw;
+    height: 100vh;
+    padding-left: 75px;
+    padding-right: 75px;
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+
+.task-section {
+    width: 40%;
+    height: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.task-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 320px;
+}
+
+.task-section p {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+.task-section p input {
+    width: 200px;
+    margin-left: 25px;
+    border-radius: 10px;
+    border: 1px solid var(--accent-colour);
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.task-section button {
+    margin-top: 20px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: fit-content;
+    border: 1px solid var(--accent-colour);
+    border-radius: 10px;
+    color: var(--accent-colour);
+    font-weight: 500;
+    align-self: center;
+}
+
+.task-section button:hover {
+    cursor: pointer;
+}
+
+.task-header {
+    padding-bottom: 20px;
 }

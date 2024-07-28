@@ -1,5 +1,8 @@
 {
     "extensions.supportVirtualWorkspaces": {
-        "django-html": "html"
+        "django-html": "html",
+    },
+    "emmet.includeLanguages": {
+        "django-html": "html",
     }
 }
