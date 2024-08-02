@@ -83,6 +83,9 @@ class Task(models.Model):
     priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     completed = models.BooleanField(default=False)
 
+    def __str__(self):
+        return self.name
+
 # HABIT CLASS MODEL USED TO STORE HABITS IN DB 
 
 class Habit(models.Model):
@@ -98,4 +101,7 @@ class Goal(models.Model):
     description = models.CharField(max_length=1250, null=True, blank=True)
     dateDue = models.DateField(null=True, blank=True)
     completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
 

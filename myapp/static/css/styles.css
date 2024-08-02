@@ -418,10 +418,10 @@ main {
 .closest-goal-box {
     flex: 1;
     /* Allow the boxes to grow */
-    min-width: 400px;
+    min-width: 500px;
     /* Ensure a minimum width for the boxes */
-    width: 300px;
-    height: 80%;
+    width: 400px;
+    height: 95%;
     background-color: var(--primary-colour);
     border-radius: 20px;
     display: flex;
@@ -431,12 +431,26 @@ main {
 }
 
 .closest-goal-box .task {
-    width: 80%;
+    width: 95%;
 }
 
 .line-100 {
     border-top: solid 3px var(--secondary-colour);
     width: 100%;
+}
+
+.closest-goal-task-box {
+    width: 80%;
+    height: 65%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    overflow-y: scroll;
+    padding: 10px;
+    border: 3px solid var(--secondary-colour);
+    border-bottom: 2px dashed var(--secondary-colour);
+    border-radius: 5px;
 }
 
 .habit-checklist {
@@ -562,64 +576,16 @@ main {
 
 /* MANAGE STYLES */
 
+.manage-window {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+.manage-menu {
+    width: 20vw;
+}
+
 .manage-section {
     width: 80vw;
-    height: 100vh;
-    padding-left: 75px;
-    padding-right: 75px;
-    padding-bottom: 25px;
-    padding-top: 25px;
-}
-
-.task-section {
-    width: 40%;
-    height: 30%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-.task-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    width: 320px;
-}
-
-.task-section p {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 10px;
-}
-
-.task-section p input {
-    width: 200px;
-    margin-left: 25px;
-    border-radius: 10px;
-    border: 1px solid var(--accent-colour);
-    padding-left: 5px;
-    padding-right: 5px;
-}
-
-.task-section button {
-    margin-top: 20px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-    padding-left: 15px;
-    padding-right: 15px;
-    width: fit-content;
-    border: 1px solid var(--accent-colour);
-    border-radius: 10px;
-    color: var(--accent-colour);
-    font-weight: 500;
-    align-self: center;
-}
-
-.task-section button:hover {
-    cursor: pointer;
-}
-
-.task-header {
-    padding-bottom: 20px;
 }

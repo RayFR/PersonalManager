@@ -100,13 +100,15 @@
             <div class="closest-goal-box">
                 <p class="goal-title">{{ goal.name }}</p>
                 <div class="line-100"></div>
-                {% for goalTask in goals.tasks %}
-                <div class="task">
-                    <p class="task-name">{{ goalTask.name }}</p>
-                    <p class="task-date">Complete by {{ goalTask.dateDue }}</p>
+                <div class="closest-goal-task-box">
+                    {% for goalTask in goal.tasks.all %}
+                    <div class="task">
+                        <p class="task-name">{{ goalTask.name }}</p>
+                        <p class="task-date">Complete by {{ goalTask.dateDue }}</p>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                <p class="goal-date">Complete by {{ goal.date }}</p>
+                <p class="goal-date">Complete by {{ goal.dateDue }}</p>
             </div>
             {% endfor %}
         </div>

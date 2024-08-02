@@ -27,7 +27,8 @@ class TaskForm(forms.ModelForm):
     goal = forms.ModelChoiceField(
         queryset=Goal.objects.all(),
         empty_label="Select a goal",
-        widget=forms.Select()
+        widget=forms.Select(),
+        required=False,
     )
 
 class GoalForm(forms.ModelForm):
