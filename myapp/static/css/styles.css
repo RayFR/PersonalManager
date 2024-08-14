@@ -120,7 +120,7 @@ body {
     font-size: 1rem;
     margin-bottom: 1.5rem;
     position: relative;
-    color: var(--secondary-key);
+    color: var(--accent-colour);
 }
 
 .form-container {
@@ -145,18 +145,19 @@ body {
 .input-bar {
     height: 25px;
     border-radius: 10px;
-    border: solid 1px var(--secondary-key);
+    border: solid 1px var(--accent-colour);
     text-align: center;
-    background-color: var(--primary-key);
+    background-color: var(--primary-colour);
 }
 
 .submit-button {
-    border: solid 1px var(--secondary-key);
+    border: solid 1px var(--accent-colour);
     border-radius: 10px;
-    width: 50%;
+    width: 40%;
     align-self: center;
-    background-color: var(--secondary-key);
-    color: var(--primary-key);
+    background-color: var(--accent-colour);
+    color: var(--primary-colour);
+    padding: 2px;
 }
 
 .submit-button::after {
@@ -188,14 +189,68 @@ main {
     font-size: 1rem;
     margin-bottom: 1.5rem;
     position: relative;
-    color: var(--secondary-key);
+    color: var(--accent-colour);
 }
 
 .register-here,
 .login-here {
     text-decoration: underline;
-    color: var(--secondary-key);
+    color: var(--accent-colour);
     font-weight: 500;
+}
+
+.input-bar:hover {
+    cursor: text;
+}
+
+.submit-button:hover,
+.login-here:hover,
+.register-here:hover {
+    cursor: pointer;
+}
+
+.submit-button,
+.login-here,
+.register-here {
+    transition: all 0.2s ease;
+    /* Smooth transition for all properties */
+}
+
+.submit-button:hover {
+    background-color: var(--secondary-colour);
+    /* Change background color on hover */
+    color: var(--accent-colour);
+    /* Change text color on hover */
+    transform: scale(1.05);
+    /* Slightly increase size on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    /* Add shadow on hover */
+}
+
+.login-here:hover,
+.register-here:hover {
+    color: var(--secondary-colour);
+    /* Change text color on hover */
+    text-decoration: none;
+    /* Remove underline on hover */
+    transform: scale(1.05);
+    /* Slightly increase size on hover */
+}
+
+.input-bar {
+    transition: all 0.5s ease;
+    /* Smooth transition for all properties */
+    padding: 10px;
+    /* Adding some padding for better visual */
+}
+
+.input-bar:hover {
+    border-color: var(--accent-colour);
+    /* Change border color on hover */
+    background-color: var(--secondary-colour);
+    /* Change background color on hover */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Add shadow on hover */
 }
 
 /* DASHBOARD STYLES */
@@ -240,6 +295,8 @@ main {
     /* Default text color */
     transition: color 0.5s ease;
     /* Smooth transition for color change */
+    padding: 2px;
+    text-align: right;
 }
 
 .menu div a::after {
@@ -268,6 +325,14 @@ main {
     /* Expand from bottom left corner */
 }
 
+#selected-menu {
+    background-color: var(--accent-colour);
+    color: var(--secondary-colour);
+    width: 97px;
+    border-radius: 00px;
+    text-align: center;
+}
+
 .menu-logo {
     width: 100px;
     height: 80px;
@@ -276,11 +341,16 @@ main {
 .menu-options {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 }
 
 .menu-options img {
     width: 40px;
     height: 40px;
+}
+
+.menu-options div {
+    width: 100%;
 }
 
 .dashboard {
@@ -334,7 +404,8 @@ main {
     color: var(--accent-colour);
 }
 
-.task {
+.task,
+.task-completed {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -350,7 +421,14 @@ main {
     transition: transform 0.3s ease;
 }
 
-.task:hover {
+.task-completed {
+    text-decoration: line-through;
+    background-color: #b3afa6;
+}
+
+
+.task:hover,
+.task-completed:hover {
     background-color: var(--tertiary-colour);
     transform: scale(1.05);
     border-color: var(--primary-colour);
@@ -358,13 +436,22 @@ main {
     cursor: pointer;
 }
 
-.task:hover p {
+.task-completed:hover {}
+
+.task:hover p,
+.task-completed:hover p {
     color: var(--primary-colour);
 }
 
 .task-name {
     font-weight: 500;
     font-size: 0.9rem;
+}
+
+.task-name-completed {
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: line-through;
 }
 
 .task-date {
@@ -385,6 +472,25 @@ main {
     border: 2px solid var(--accent-colour);
     border-bottom: 1px dashed var(--accent-colour);
     border-radius: 5px;
+}
+
+.edit-button,
+.edit-button-completed {
+    padding: 3px;
+    font-family: Ubuntu;
+    color: var(--accent-colour);
+    border-radius: 10px;
+    border: 1px solid var(--accent-colour);
+    background-color: var(--primary-colour);
+}
+
+.edit-button-completed {
+    background-color: #c2beb2;
+}
+
+.edit-button:hover,
+.edit-button-completed:hover {
+    cursor: pointer;
 }
 
 .closest-goal {
@@ -476,9 +582,20 @@ main {
     border-bottom: 1px dashed var(--accent-colour);
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 30px;
     align-items: center;
     overflow-y: scroll;
+}
+
+.habit-wrapper {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .habit {
@@ -490,8 +607,8 @@ main {
     padding-bottom: 10px;
     padding-right: 20px;
     padding-left: 20px;
-    border: solid 1px var(--accent-colour);
-    border-radius: 20px;
+    border-bottom: 1px solid var(--accent-colour);
+    border-top: 1px solid var(--accent-colour);
 }
 
 .habit p {
@@ -504,14 +621,46 @@ main {
     visibility: hidden;
 }
 
+.habit-button,
+.habit-button-completed {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--accent-colour);
+    background-color: var(--primary-colour);
+    width: 42px;
+    height: 42px;
+}
+
+.habit-button-completed {
+    background-color: #c2beb2;
+}
+
+.habit-button:hover,
+.habit-button-completed:hover {
+    cursor: pointer;
+}
+
+.tick-image {
+    width: 20px;
+    height: 20px;
+}
+
+.tick-image:hover {
+    cursor: pointer;
+}
+
 #id_completed {
     border: 1px solid var(--accent-colour);
     padding: 10px;
 }
 
-.habit-name {
+.habit-name,
+.habit-name-completed {
     width: 200px;
-    text-align: center;
+}
+
+.habit-name-completed {
+    text-decoration: line-through;
 }
 
 .check-circle {
@@ -526,7 +675,7 @@ main {
 }
 
 .full {
-    background-color: var(--primary-colour);
+    background-color: var(--accent-colour);
 }
 
 .calendar {
@@ -543,16 +692,34 @@ main {
     padding-left: 20px;
 }
 
-.calendar-container {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    gap: 10px;
+.calendar-container table {
     width: 100%;
-    max-width: 600px;
-    margin: 0 auto;
-    align-items: center;
-    padding-left: 20px;
+    border-collapse: collapse;
+}
+
+.calendar-container th {
+    background-color: var(--primary-colour);
+    padding: 10px;
+    text-align: center;
+}
+
+.calendar-container td {
+    padding: 10px;
+    text-align: center;
+    font-family: Ubuntu;
+    font-weight: 500;
+    border: 1px solid var(--primary-colour);
+}
+
+.calendar-container td.today {
+    background-color: var(--primary-colour);
+    /* Highlight with your primary color */
+    color: var(--accent-colour);
+    font-weight: bold;
+}
+
+.today {
+    border: 1px solid var(--accent-colour);
 }
 
 .day {
@@ -588,4 +755,44 @@ main {
 
 .manage-section {
     width: 80vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 50px;
+}
+
+.manage-section form {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    width: 300px;
+}
+
+.manage-section form h2 {
+    text-decoration: underline;
+    align-self: center;
+    margin-bottom: 20px;
+}
+
+.manage-section form p {
+    display: flex;
+    justify-content: space-between;
+}
+
+.manage-section input {
+    background-color: var(--primary-colour);
+    border-radius: 10px;
+    padding-left: 5px;
+    border: 1px solid var(--accent-colour);
+}
+
+.manage-section form button {
+    width: 50%;
+    align-self: center;
+    justify-content: center;
+    background-color: var(--secondary-colour);
+    border: 1px solid var(--accent-colour);
+    border-radius: 10px;
+    margin-top: 20px;
 }

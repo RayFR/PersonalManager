@@ -1,15 +1,13 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import TodoItem, Task, Habit, Goal
+from .models import Task, Habit, Goal
 from .forms import GoalForm, RegistrationForm, LoginForm, TaskForm, HabitForm, HabitDashboardForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
-
-def home(request):
-    return render(request, "home.html")
-
-def todos(request):
-    items = TodoItem.objects.all()
-    return render(request, "todos.html", {"todos": items})
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+import calendar
+from calendar import HTMLCalendar
+from datetime import datetime
 
 def register(request):
     if request.method == 'POST':
@@ -32,12 +30,19 @@ def login_page(request):
             user = authenticate(email=email, password=password)
             if user is not None:
                 login(request, user)
-                return redirect('home')
+                return redirect('dashboard')
     else:
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
-def dashboard(request):
+def dashboard(request):   
+    now = datetime.now() # gets current datetime
+    current_year = now.year
+    current_month = now.month
+    current_day = now.day
+    
+    cal = HTMLCalendar().formatmonth(current_year, current_month) # generates the HTML calendar for the current date
+
     habitForm = HabitDashboardForm(request.POST or None)
     if request.method == 'POST':
         habit_id = request.POST.get('habit_id')
@@ -47,11 +52,24 @@ def dashboard(request):
             habitForm.save()
             return redirect('dashboard')
 
-    tasks = Task.objects.all().order_by('-priority').values()
-    habits = Habit.objects.all()
-    goals = Goal.objects.all()
-    return render(request, "dashboard.html", {"tasks": tasks, "habits": habits, "habitForm": habitForm, "goals": goals})
-
+    try:
+        tasks = Task.objects.filter(user=request.user).order_by('-priority').values()
+        tasks = tasks.order_by("completed")
+        habits = Habit.objects.filter(user=request.user).order_by('completed')
+        goals = Goal.objects.filter(user=request.user)
+    except TypeError:
+        return redirect('login')
+    print(f"Goals: {goals}")
+    return render(request, "dashboard.html", {
+        "tasks": tasks, 
+        "habits": habits, 
+        "habitForm": habitForm, 
+        "goals": goals,
+        'calendar': cal,
+        'current_day': current_day,
+        'current_month': current_month,
+        'current_year': current_year,})
+    
 def manage(request):
     goalForm = GoalForm(request.POST or None)
     taskForm = TaskForm(request.POST or None)
@@ -61,8 +79,13 @@ def manage(request):
         if 'create_goal' in request.POST:
             goalForm = GoalForm(data=request.POST)
             if goalForm.is_valid():
-                goalForm.save()
+                goal = goalForm.save(commit=False)
+                goal.user = request.user
+                goal.save()
+                messages.success(request, 'Goal created successfully!')
                 return redirect('manage')
+            else:
+                messages.error(request, 'Failed to create goal.')
 
         if 'create_task' in request.POST:
             taskForm = TaskForm(data=request.POST)
@@ -80,7 +103,10 @@ def manage(request):
                 habit.save()
                 return redirect('manage')
 
-    goals = Goal.objects.filter(user=request.user)
+    try: 
+        goals = Goal.objects.filter(user=request.user)
+    except TypeError:
+        return redirect('login')
 
     return render(request, "manage.html", {
         'goalForm': goalForm,
@@ -88,3 +114,26 @@ def manage(request):
         'habitForm': habitForm,
         'goals': goals,
     })
+
+def settings(request):
+    return render(request, "settings.html")
+
+def toggle_task_completion(request, task_id): # takes the request and the task id value as parameters
+    task = get_object_or_404(Task, id=task_id)
+
+    if request.method == 'POST':
+        task.completed = not task.completed # reverses whatever the value of task.completed is
+        task.save() # saves task
+        return redirect('dashboard')
+    
+    return render(request, 'task/toggle_completion.html', {'task': task}) # passes task context and the html rendering of the updated task values
+
+def toggle_habit_completion(request, habit_id):
+    habit = get_object_or_404(Habit, id=habit_id)
+
+    if request.method == 'POST':
+        habit.completed = not habit.completed
+        habit.save()
+        return redirect('dashboard')
+    
+    return render(request, 'habit/toggle_completion.html', {'habit': habit})

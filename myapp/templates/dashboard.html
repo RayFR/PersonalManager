@@ -10,7 +10,7 @@
     <div class="menu-options">
         <div class="dashboard-menu">
             <img src="{% static 'images/apps.svg' %}" alt="Dashboard">
-            <a href="{% url 'dashboard' %}">Dashboard</a>
+            <a id="selected-menu" href="{% url 'dashboard' %}">Dashboard</a>
         </div>
         <div class="manage">
             <img src="{% static 'images/layers.svg' %}" alt="Manage">
@@ -18,7 +18,7 @@
         </div>
         <div class="settings">
             <img src="{% static 'images/settings.svg' %}" alt="Settings">
-            <a>Settings</a>
+            <a href="{% url 'settings' %}">Settings</a>
         </div>
     </div>
     <div class="login-information">
@@ -36,65 +36,47 @@
 </div>
 <div class="dashboard">
     <div class="task-priority widget">
-        <p class="task-priority-title">Task Priority | 5 Tasks</p>
+        <p class="task-priority-title">Task Priority | {{ tasks|length }} Tasks</p>
         <div class="task-list">
             {% for task in tasks %}
-            <div class="task">
-                <p class="task-name">{{ task.name }}</p>
-                <p class="task-date">Complete by {{ task.dateDue }}</p>
+            {% if task.completed %}
+            <div class="task-completed">
+                <!-- Display the task name differently if completed -->
+                    <p class="task-name-completed">{{ task.name }}</p>
+                    <p class="task-date">Complete by {{ task.dateDue }}</p>        
+                <!-- Form to toggle completion status -->
+                <form method="post" action="{% url 'toggle_task_completion' task.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="edit-button-completed">
+                        {% if task.completed %}Mark as Incomplete{% else %}Mark as Complete{% endif %}
+                    </button>
+                </form>
             </div>
+            {% else %}
+            <div class="task">
+                <!-- Display the task name differently if completed -->
+                    <p class="task-name">{{ task.name }}</p>
+                    <p class="task-date">Complete by {{ task.dateDue }}</p>
+                <!-- Form to toggle completion status -->
+                <form method="post" action="{% url 'toggle_task_completion' task.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="edit-button">
+                        {% if task.completed %}Mark as Incomplete{% else %}Mark as Complete{% endif %}
+                    </button>
+                </form>
+            </div>
+            {% endif %}
             {% endfor %}
         </div>
     </div>
     <div class="calendar widget">
-        <p class="month-year">July 2024</p>
+        <p class="month-year">Date today: {{ current_day }}/0{{ current_month }}/{{ current_year }}</p>
         <div class="calendar-container">
-            <div class="check-circle day">1</div>
-            <div class="check-circle day">2</div>
-            <div class="check-circle day">3</div>
-            <div class="check-circle day">4</div>
-            <div class="check-circle day">5</div>
-            <div class="check-circle day">6</div>
-            <div class="check-circle day">7</div>
-            <div class="check-circle day">8</div>
-            <div class="check-circle day">9</div>
-            <div class="check-circle day">10</div>
-            <div class="check-circle day">11</div>
-            <div class="check-circle day">12</div>
-            <div class="check-circle day">13</div>
-            <div class="check-circle day">14</div>
-            <div class="check-circle day">15</div>
-            <div class="check-circle day">16</div>
-            <div class="check-circle day">17</div>
-            <div class="check-circle day">18</div>
-            <div class="check-circle day">19</div>
-            <div class="check-circle day">20</div>
-            <div class="check-circle day">21</div>
-            <div class="check-circle day">22</div>
-            <div class="check-circle day">23</div>
-            <div class="check-circle day">24</div>
-            <div class="check-circle day">25</div>
-            <div class="check-circle day">26</div>
-            <div class="check-circle day">27</div>
-            <div class="check-circle day">28</div>
-            <div class="check-circle day">29</div>
-            <div class="check-circle day">30</div>
-            <div class="check-circle day">31</div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
-            <div class="check-circle day"></div>
+            {{ calendar|safe }}
         </div>
     </div>
     <div class="closest-goal widget">
-        <p class="closest-goal-title">Closest Goal</p>
+        <p class="closest-goal-title">Closest Goal | {{ goals|length }} Goals</p>
         <div class="closest-goal-wrapper">
             {% for goal in goals %}
             <div class="closest-goal-box">
@@ -114,16 +96,34 @@
         </div>
     </div>
     <div class="habit-checklist widget">
-        <p class="habit-checklist-title">Habit Checklist</p>
+        <p class="habit-checklist-title">Habit Checklist | {{ habits|length }} Habits</p>
         <div class="habit-box">
             {% for habit in habits %}
+            {% if habit.completed %}
             <div class="habit">
-                {{ habitForm.as_p }}
-                <div class="habit-name">{{ habit.name }}</div>
+                <p class="habit-name-completed">{{habit.name}}</p>
+                <form method="post" action="{% url 'toggle_habit_completion' habit.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="habit-button">
+                        <img class="tick-image" src="static/images/CHECK.png" alt="check">
+                    </button>
+                </form>
             </div>
+            {% else %}
+            <div class="habit">
+                <p class="habit-name">{{habit.name}}</p>
+                <form method="post" action="{% url 'toggle_habit_completion' habit.id %}">
+                    {% csrf_token %}
+                    <button type="submit" class="habit-button"></button>
+                </form>
+            </div>
+            {% endif %}
+
             {% endfor %}
-            </div>
         </div>
     </div>
 </div>
 {% endblock content %}
+
+
+

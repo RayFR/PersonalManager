@@ -2,7 +2,7 @@
 
 {% load static %}
 
-{% block title %}Manage{% endblock %}
+{% block title %}Settings{% endblock %}
 
 {% block content %}
 <div class="menu">
@@ -14,11 +14,11 @@
         </div>
         <div class="manage">
             <img src="{% static 'images/layers.svg' %}" alt="Manage">
-            <a id="selected-menu" href="{% url 'manage' %}">Manage</a>
+            <a href="{% url 'manage' %}">Manage</a>
         </div>
         <div class="settings">
             <img src="{% static 'images/settings.svg' %}" alt="Settings">
-            <a href="{% url 'settings' %}">Settings</a>
+            <a id="selected-menu" href="{% url 'settings' %}">Settings</a>
         </div>
     </div>
     <div class="login-information">
@@ -33,30 +33,5 @@
             <a class="login-anchor" href="{% url 'login' %}">Login</a>
         {% endif %}
     </div>
-</div>
-
-<div class="manage-section">
-    <h1>Manage Goals, Tasks, and Habits</h1>
-
-    <form method="post">
-        {% csrf_token %}
-        <h2>Create Goal</h2>
-        {{ goalForm.as_p }}
-        <button type="submit" name="create_goal">Create Goal</button>
-    </form>
-
-    <form method="post">
-        {% csrf_token %}
-        <h2>Create Task</h2>
-        {{ taskForm.as_p }}
-        <button type="submit" name="create_task">Create Task</button>
-    </form>
-
-    <form method="post">
-        {% csrf_token %}
-        <h2>Create Habit</h2>
-        {{ habitForm.as_p }}
-        <button type="submit" name="create_habit">Create Habit</button>
-    </form>
 </div>
 {% endblock content %}

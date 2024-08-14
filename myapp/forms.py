@@ -51,3 +51,9 @@ class HabitDashboardForm(forms.ModelForm):
         widgets = {
             'completed': forms.CheckboxInput(),
         }
+
+class TaskCompleteForm(forms.ModelForm):
+    class Meta:
+        model = Task
+        fields = ["completed"]
+

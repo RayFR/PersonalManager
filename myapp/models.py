@@ -3,12 +3,6 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.contrib.auth import get_user_model
 
-# Create your models here.
-
-class TodoItem(models.Model):
-    title = models.CharField(max_length=200)
-    completed = models.BooleanField(default=False)
-
 # THIS CLASS MODEL ALLOWS FOR USERS TO BE MANAGED (CREATED) - ALLOWS FOR BOTH STANDARD USERS AND SUPERUSERS (ADMINS) TO BE CREATED
 
 class UserManager(BaseUserManager):
@@ -83,7 +77,7 @@ class Task(models.Model):
     priority = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(5)])
     completed = models.BooleanField(default=False)
 
-    def __str__(self):
+    def __str__(self): # returns the task as the string name if not specified
         return self.name
 
 # HABIT CLASS MODEL USED TO STORE HABITS IN DB 
@@ -92,6 +86,9 @@ class Habit(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=128)
     completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.name
     
 # GOALS CLASS MODEL USED TO STORE GOALS THAT HAVE SUB TASKS
 

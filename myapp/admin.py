@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import TodoItem, User, Task
+from .models import *
 
 # Register your models here.
-admin.site.register(TodoItem) 
 admin.site.register(User)
 admin.site.register(Task)
+admin.site.register(Goal)
+admin.site.register(Habit)

@@ -39,6 +39,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'django.contrib.admin',
     'django.contrib.admindocs',
+    'bootstrap_modal_forms',
+    'django_crontab',
     'livereload',
     'myapp',
 )
@@ -136,5 +138,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # CUSTOM
 
 LOGIN_REDIRECT_URL = "/"
-LOGOUT_REDIRECT_URL = "/" 
+LOGOUT_REDIRECT_URL = "/login" 
 SITE_ID = 1
+CRONJOBS = [
+    ('0 0 * * *', 'django.core.management.call_command', ['reset_habits']),
+]
