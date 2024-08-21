@@ -6,7 +6,7 @@ django-bootstrap-modal-forms
 django-crontab
 django-livereload-server
 mypy-extensions
-packagin
+packaging
 pathspec
 platformdirs
 sqlparse
