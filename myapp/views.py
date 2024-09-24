@@ -35,14 +35,28 @@ def login_page(request):
         form = LoginForm()
     return render(request, 'login.html', {'form': form})
 
+class CustomHTMLCalendar(HTMLCalendar):
+    def __init__(self, current_day, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.current_day = current_day
+
+    # Override the formatday method to highlight the current day
+    def formatday(self, day, weekday):
+        if day == 0:
+            return '<td class="noday">&nbsp;</td>'  # Empty days
+        elif day == self.current_day:
+            return f'<td class="today">{day}</td>'  # Highlight the current day
+        else:
+            return f'<td>{day}</td>'  # Regular day
+
 def dashboard(request):   
     now = datetime.now() # gets current datetime
     current_year = now.year
     current_month = now.month
     current_day = now.day
     
-    cal = HTMLCalendar().formatmonth(current_year, current_month) # generates the HTML calendar for the current date
-
+    cal = CustomHTMLCalendar(current_day).formatmonth(current_year, current_month)
+    
     habitForm = HabitDashboardForm(request.POST or None)
     if request.method == 'POST':
         habit_id = request.POST.get('habit_id')

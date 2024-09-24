@@ -35,94 +35,103 @@
     </div>
 </div>
 <div class="dashboard">
-    <div class="task-priority widget">
-        <p class="task-priority-title">Task Priority | {{ tasks|length }} Tasks</p>
-        <div class="task-list">
-            {% for task in tasks %}
-            {% if task.completed %}
-            <div class="task-completed">
-                <!-- Display the task name differently if completed -->
-                    <p class="task-name-completed">{{ task.name }}</p>
-                    <p class="task-date">Complete by {{ task.dateDue }}</p>        
-                <!-- Form to toggle completion status -->
-                <form method="post" action="{% url 'toggle_task_completion' task.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="edit-button-completed">
-                        {% if task.completed %}Mark as Incomplete{% else %}Mark as Complete{% endif %}
-                    </button>
-                </form>
+    <div class="left-widgets">
+        <div class="task-priority widget">
+            <p class="task-priority-title">Task Priority | {{ tasks|length }} Tasks</p>
+            <div class="task-list">
+                {% for task in tasks %}
+                {% if task.completed %}
+                <div class="task-completed">
+                    <!-- Display the task name differently if completed -->
+                        <p class="task-name-completed">{{ task.name }}</p>
+                        <p class="task-date">Complete by {{ task.dateDue }}</p>        
+                    <!-- Form to toggle completion status -->
+                    <form method="post" action="{% url 'toggle_task_completion' task.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="edit-button-completed">
+                            {% if task.completed %}Mark as Incomplete{% else %}Mark as Complete{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% else %}
+                <div class="task">
+                    <!-- Display the task name differently if completed -->
+                        <p class="task-name">{{ task.name }}</p>
+                        <p class="task-date">Complete by {{ task.dateDue }}</p>
+                    <!-- Form to toggle completion status -->
+                    <form method="post" action="{% url 'toggle_task_completion' task.id %}">
+                        {% csrf_token %}
+                        <button type="submit" class="edit-button">
+                            {% if task.completed %}Mark as Incomplete{% else %}Mark as Complete{% endif %}
+                        </button>
+                    </form>
+                </div>
+                {% endif %}
+                {% endfor %}
             </div>
-            {% else %}
-            <div class="task">
-                <!-- Display the task name differently if completed -->
-                    <p class="task-name">{{ task.name }}</p>
-                    <p class="task-date">Complete by {{ task.dateDue }}</p>
-                <!-- Form to toggle completion status -->
-                <form method="post" action="{% url 'toggle_task_completion' task.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="edit-button">
-                        {% if task.completed %}Mark as Incomplete{% else %}Mark as Complete{% endif %}
-                    </button>
-                </form>
-            </div>
-            {% endif %}
-            {% endfor %}
         </div>
     </div>
-    <div class="calendar widget">
-        <p class="month-year">Date today: {{ current_day }}/0{{ current_month }}/{{ current_year }}</p>
-        <div class="calendar-container">
-            {{ calendar|safe }}
+    
+    <div class="right-widgets">
+        <div class="calendar widget">
+            <div class="calendar-container">
+                {{ calendar|safe }}
+            </div>
+            <div class="upcoming-tasks"></div>
         </div>
-    </div>
-    <div class="closest-goal widget">
-        <p class="closest-goal-title">Closest Goal | {{ goals|length }} Goals</p>
-        <div class="closest-goal-wrapper">
-            {% for goal in goals %}
-            <div class="closest-goal-box">
-                <p class="goal-title">{{ goal.name }}</p>
-                <div class="line-100"></div>
-                <div class="closest-goal-task-box">
-                    {% for goalTask in goal.tasks.all %}
-                    <div class="task">
-                        <p class="task-name">{{ goalTask.name }}</p>
-                        <p class="task-date">Complete by {{ goalTask.dateDue }}</p>
+        <div class="goal-habit">
+            <div class="closest-goal widget">
+                <p class="closest-goal-title">Closest Goal | {{ goals|length }} Goals</p>
+                <div class="closest-goal-wrapper">
+                    {% for goal in goals %}
+                    <div class="closest-goal-box">
+                        <p class="goal-title">{{ goal.name }}</p>
+                        <div class="line-100"></div>
+                        <div class="closest-goal-task-box">
+                            {% for goalTask in goal.tasks.all %}
+                            <div class="task">
+                                <p class="task-name">{{ goalTask.name }}</p>
+                                <p class="task-date">Complete by {{ goalTask.dateDue }}</p>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <p class="goal-date">Complete by {{ goal.dateDue }}</p>
                     </div>
                     {% endfor %}
                 </div>
-                <p class="goal-date">Complete by {{ goal.dateDue }}</p>
             </div>
-            {% endfor %}
+            <div class="habit-checklist widget">
+                <p class="habit-checklist-title">Habit Checklist | {{ habits|length }} Habits</p>
+                <div class="habit-box">
+                    {% for habit in habits %}
+                    {% if habit.completed %}
+                    <div class="habit">
+                        <p class="habit-name-completed">{{habit.name}}</p>
+                        <form method="post" action="{% url 'toggle_habit_completion' habit.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="habit-button" style="background-color: #426353">
+                                <img class="tick-image" src="static/images/CHECKWHITE.png" alt="check">
+                            </button>
+                        </form>
+                    </div>
+                    {% else %}
+                    <div class="habit">
+                        <p class="habit-name">{{habit.name}}</p>
+                        <form method="post" action="{% url 'toggle_habit_completion' habit.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="habit-button"></button>
+                        </form>
+                    </div>
+                    {% endif %}
+        
+                    {% endfor %}
+                </div>
+            </div>
         </div>
-    </div>
-    <div class="habit-checklist widget">
-        <p class="habit-checklist-title">Habit Checklist | {{ habits|length }} Habits</p>
-        <div class="habit-box">
-            {% for habit in habits %}
-            {% if habit.completed %}
-            <div class="habit">
-                <p class="habit-name-completed">{{habit.name}}</p>
-                <form method="post" action="{% url 'toggle_habit_completion' habit.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="habit-button">
-                        <img class="tick-image" src="static/images/CHECK.png" alt="check">
-                    </button>
-                </form>
-            </div>
-            {% else %}
-            <div class="habit">
-                <p class="habit-name">{{habit.name}}</p>
-                <form method="post" action="{% url 'toggle_habit_completion' habit.id %}">
-                    {% csrf_token %}
-                    <button type="submit" class="habit-button"></button>
-                </form>
-            </div>
-            {% endif %}
 
-            {% endfor %}
-        </div>
     </div>
 </div>
+    
 {% endblock content %}
 
 

@@ -256,7 +256,7 @@ main {
 /* DASHBOARD STYLES */
 
 .menu {
-    width: 20vw;
+    width: 15vw;
     height: 100vh;
     background-color: var(--secondary-colour);
     display: flex;
@@ -265,10 +265,6 @@ main {
     align-items: center;
     gap: 50px;
     transition: background-color 0.3s ease;
-}
-
-.menu:hover {
-    background-color: #a1ad8d;
 }
 
 .menu div {
@@ -329,7 +325,7 @@ main {
     background-color: var(--accent-colour);
     color: var(--secondary-colour);
     width: 97px;
-    border-radius: 00px;
+    border-radius: 8px;
     text-align: center;
 }
 
@@ -354,10 +350,10 @@ main {
 }
 
 .dashboard {
-    width: 80vw;
+    width: 85vw;
     height: 100vh;
-    padding-left: 75px;
-    padding-right: 75px;
+    padding-left: 50px;
+    padding-right: 50px;
     padding-bottom: 25px;
     padding-top: 25px;
     background-color: var(--primary-colour);
@@ -366,9 +362,13 @@ main {
     /* Two rows with equal height */
     grid-template-columns: 1fr 1fr;
     /* Two columns with equal width */
-    gap: 30px;
+    gap: 50px;
     /* grid-template-columns: repeat(auto-fill, minmax(var(--widget-width), 1fr));
     grid-auto-rows: minmax(var(--widget-height), auto); */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .widget {
@@ -376,18 +376,13 @@ main {
     border-radius: 20px;
     width: 100%;
     height: 100%;
+    /* Ensure it fills the parent container */
     background-color: var(--secondary-colour);
     align-self: center;
     justify-self: center;
     overflow: hidden;
-    /* Hide overflow to contain the underline */
+    /* Prevent content from overflowing */
     transition: background-color 0.3s ease;
-    /* Smooth transition for background color */
-}
-
-.widget:hover {
-    background-color: #a1ad8d;
-    /* Change background color on hover */
 }
 
 .task-priority {
@@ -412,7 +407,7 @@ main {
     align-items: center;
     height: var(--task-height);
     width: 80%;
-    height: fit-content;
+    height: 60px;
     background-color: var(--primary-colour);
     border: solid 1px var(--tertiary-colour);
     border-radius: 40px;
@@ -524,7 +519,7 @@ main {
 .closest-goal-box {
     flex: 1;
     /* Allow the boxes to grow */
-    min-width: 500px;
+    min-width: 400px;
     /* Ensure a minimum width for the boxes */
     width: 400px;
     height: 95%;
@@ -607,8 +602,8 @@ main {
     padding-bottom: 10px;
     padding-right: 20px;
     padding-left: 20px;
-    border-bottom: 1px solid var(--accent-colour);
-    border-top: 1px solid var(--accent-colour);
+    border: 1px solid var(--accent-colour);
+    border-radius: 30px;
 }
 
 .habit p {
@@ -624,15 +619,15 @@ main {
 .habit-button,
 .habit-button-completed {
     padding: 10px;
-    border-radius: 10px;
-    border: 1px solid var(--accent-colour);
+    border-radius: 20px;
+    border: 0px solid var(--accent-colour);
     background-color: var(--primary-colour);
     width: 42px;
     height: 42px;
 }
 
 .habit-button-completed {
-    background-color: #c2beb2;
+    background-color: var(--primary-colour);
 }
 
 .habit-button:hover,
@@ -680,9 +675,10 @@ main {
 
 .calendar {
     display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+    flex-direction: row;
+    justify-content: flex-end;
     padding: 20px;
+    height: 100%;
     gap: 20px
 }
 
@@ -690,37 +686,68 @@ main {
     font-size: x-large;
     font-weight: 500;
     padding-left: 20px;
+    padding-bottom: 20px;
+}
+
+.calendar-container {
+    max-height: 100%;
+    overflow-y: none;
+    width: 70%;
 }
 
 .calendar-container table {
     width: 100%;
+    height: 100%;
+    table-layout: fixed;
+    /* Ensures all cells fit within the container */
     border-collapse: collapse;
+    border-radius: 5px;
 }
 
+.calendar-container td,
 .calendar-container th {
-    background-color: var(--primary-colour);
-    padding: 10px;
-    text-align: center;
-}
-
-.calendar-container td {
-    padding: 10px;
+    padding: 4px;
     text-align: center;
     font-family: Ubuntu;
     font-weight: 500;
     border: 1px solid var(--primary-colour);
+    width: 14.28%;
+    /* Adjust to ensure 7 columns fit properly */
+}
+
+.calendar-container td {
+    min-height: 40px;
+    border: none;
+    padding: 10px;
+    /* Set minimum height to avoid cutting off text */
+}
+
+.calendar-container th {
+    border: none;
+}
+
+.upcoming-tasks {
+    border: 1px solid var(--accent-colour);
+    height: 100%;
+    width: 30%;
 }
 
 .calendar-container td.today {
-    background-color: var(--primary-colour);
-    /* Highlight with your primary color */
-    color: var(--accent-colour);
-    font-weight: bold;
+    border-radius: 50px;
+    /* Makes it a circle */
+    background-color: var(--accent-colour);
+    /* Use the accent color */
+    color: var(--primary-colour);
+    width: 7%;
 }
 
-.today {
-    border: 1px solid var(--accent-colour);
+.calendar-container td.today:hover {
+    background-color: var(--secondary-colour);
+    /* Optional: change color on hover */
+    color: var(--accent-colour);
+    /* Optional: change text color on hover */
 }
+
 
 .day {
     background-color: var(--primary-colour);
@@ -741,6 +768,11 @@ main {
     cursor: pointer;
 }
 
+.month {
+    border-bottom: 10px solid var(--secondary-colour);
+    border-radius: 10px;
+}
+
 /* MANAGE STYLES */
 
 .manage-window {
@@ -754,12 +786,17 @@ main {
 }
 
 .manage-section {
-    width: 80vw;
+    width: 85vw;
+    height: 100vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     gap: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+    padding-top: 25px;
+    padding-bottom: 25px;
 }
 
 .manage-section form {
@@ -767,6 +804,9 @@ main {
     flex-direction: column;
     gap: 5px;
     width: 300px;
+    padding: 20px;
+    border: 2px dashed var(--accent-colour);
+    border-radius: 30px;
 }
 
 .manage-section form h2 {
@@ -795,4 +835,33 @@ main {
     border: 1px solid var(--accent-colour);
     border-radius: 10px;
     margin-top: 20px;
+}
+
+.left-widgets,
+.right-widgets {
+    height: 95%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-widgets {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    gap: 25px;
+}
+
+.left-widgets {
+    width: 35%;
+}
+
+.goal-habit {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 25px;
 }
