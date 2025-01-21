@@ -86,7 +86,7 @@ def dashboard(request):
     
 def manage(request):
     goalForm = GoalForm(request.POST or None)
-    taskForm = TaskForm(request.POST or None)
+    taskForm = TaskForm(request.POST or None, user=request.user)
     habitForm = HabitForm(request.POST or None)
 
     if request.method == 'POST':
@@ -102,7 +102,7 @@ def manage(request):
                 messages.error(request, 'Failed to create goal.')
 
         if 'create_task' in request.POST:
-            taskForm = TaskForm(data=request.POST)
+            taskForm = TaskForm(data=request.POST, user=request.user)
             if taskForm.is_valid():
                 task = taskForm.save(commit=False)
                 task.user = request.user

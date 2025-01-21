@@ -24,12 +24,13 @@ class TaskForm(forms.ModelForm):
             'dateDue': DateInput(),
         }
     
-    goal = forms.ModelChoiceField(
-        queryset=Goal.objects.all(),
-        empty_label="Select a goal",
-        widget=forms.Select(),
-        required=False,
-    )
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)  # Retrieve the user from the view
+        super(TaskForm, self).__init__(*args, **kwargs)
+        if user:
+            # Filter the queryset to include only the logged-in user's goals
+            self.fields['goal'].queryset = Goal.objects.filter(user=user)
+        self.fields['goal'].empty_label = "No Goal"  # Set the custom placeholder
 
 class GoalForm(forms.ModelForm):
     class Meta:
